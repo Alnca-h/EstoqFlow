@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="#11273d" name="theme-color"/>
+<meta content="Controle de estoque e pedidos." name="description"/>
+<title>EstoqFlow | Controle de Estoque</title>
+<link href="/style.css" rel="stylesheet"/>
+<script>
+    const urlAtual = new URL(window.location.href);
+    if (urlAtual.searchParams.get('utm_source') === 'chatgpt.com') {
+      urlAtual.searchParams.delete('utm_source');
+      window.history.replaceState(
+        window.history.state,
+        '',
+        urlAtual.pathname + urlAtual.search + urlAtual.hash
+      );
+    }
+  </script>
+<script defer="" src="/app.js"></script>
+</head>
+<body>
+<div class="shell">
+<aside class="sidebar">
+<div class="brand"><span aria-hidden="true" class="brand-icon">▦</span><div><strong>EstoqFlow</strong></div></div>
+
+<nav aria-label="Navegação principal" class="side-nav">
+<button aria-current="page" class="nav-button active" data-view="painel" type="button"><span aria-hidden="true">▦</span> Visão geral</button>
+<button class="nav-button" data-view="novo" type="button"><span aria-hidden="true">＋</span> Novo pedido</button>
+<button class="nav-button" data-view="pedidos" type="button"><span aria-hidden="true">▤</span> Histórico de pedidos</button>
+<button class="nav-button" data-view="movimentacoes" type="button"><span aria-hidden="true">⇅</span> Movimentações</button>
+</nav>
+</aside>
+<main class="main">
+<div class="page-content">
+<section aria-labelledby="title-painel" class="view active" id="view-painel">
+<div class="page-intro"><div><h1 id="title-painel">Visão geral</h1></div><button class="button button-primary" data-go="novo" type="button"><span aria-hidden="true">＋</span> Novo pedido</button></div>
+<div class="section-head"><div><h2>Materiais</h2></div><button class="button button-outline" id="refresh-stock" type="button">↻ Atualizar</button></div>
+<div class="inventory-grid" id="stock-grid"><div class="empty-state full-width">Aguardando dados do ESP32...</div></div>
+</section>
+<section aria-labelledby="title-novo" class="view" hidden="" id="view-novo">
+<div class="page-intro"><div><h1 id="title-novo">Novo pedido</h1></div></div>
+<div class="form-layout"><form class="panel" id="order-form" novalidate="">
+<div class="panel-heading"><div><h2>Informações do pedido</h2></div></div>
+<div class="form-row"><label class="field"><span>Nome do solicitante <em>*</em></span><input autocomplete="name" id="requester" maxlength="100" name="requester" placeholder="Ex.: Maria Silva" required="" type="text"/></label><label class="field"><span>Data <em>*</em></span><input id="order-date" inputmode="numeric" maxlength="8" name="date" placeholder="dd/mm/aa" required="" type="text"/></label></div>
+<label class="field"><span>Descrição do pedido <em>*</em></span><textarea id="description" maxlength="500" name="description" placeholder="Ex.: Materiais para a oficina de segunda-feira" required="" rows="3"></textarea></label>
+<div class="section-rule"></div>
+<div class="panel-heading"><div><h2>Selecionar materiais</h2></div></div>
+<div class="order-items" id="order-items"><div class="empty-state">Aguardando o ESP32 enviar os materiais...</div></div>
+<div class="order-bottom"><div class="order-total"><span>Materiais selecionados</span><strong id="order-total">0 unidades</strong></div><button class="button button-primary" disabled="" id="submit-order" type="submit">Confirmar pedido <span aria-hidden="true">→</span></button></div>
+</form><aside class="panel order-side"><h3>Resumo do pedido</h3><div class="summary-items" id="order-summary"><span class="muted">Nenhum item selecionado.</span></div></aside></div>
+</section>
+<section aria-labelledby="title-pedidos" class="view" hidden="" id="view-pedidos">
+<div class="page-intro"><div><h1 id="title-pedidos">Histórico de pedidos</h1></div></div>
+<div class="panel listing-panel"><div class="table-tools"><form class="filter-form" id="orders-filter"><label for="orders-month">Mês/ano</label><input id="orders-month" inputmode="numeric" maxlength="5" placeholder="mm/aa" required="" type="text"/><button class="button button-outline" type="submit">Filtrar</button></form></div><div class="table-wrap" id="orders-results"><div class="empty-state">Carregando pedidos...</div></div></div>
+</section>
+<section aria-labelledby="title-movimentacoes" class="view" hidden="" id="view-movimentacoes">
+<div class="page-intro"><div><h1 id="title-movimentacoes">Movimentações</h1></div></div>
+<div class="panel listing-panel"><div class="table-tools"><form class="filter-form" id="movements-filter"><label for="movements-month">Mês/ano</label><input id="movements-month" inputmode="numeric" maxlength="5" placeholder="mm/aa" required="" type="text"/><button class="button button-outline" type="submit">Filtrar</button></form></div><div class="table-wrap" id="movements-results"><div class="empty-state">Carregando movimentações...</div></div></div>
+</section>
+</div>
+
+</main>
+</div>
+<div aria-live="polite" class="toast" hidden="" id="toast" role="status"></div>
+<noscript>Habilite o JavaScript para utilizar a interface de pedidos.</noscript>
+</body>
+</html>
+
